@@ -32,7 +32,7 @@ void imp_tab(char **t,int dim)
     }
     printf("\n");
 }
-void inicia_elmeu_taulell(char*** t,int dim)
+void inicia_elmeu_taulell(char*** t,int dim)//t 3 dimensiones: 1ª 0-tablero disparos 1- tablero propio 2ªy3ª fila y columna
 {
     
     printf("Va a diseñar su tablero\n");
@@ -52,7 +52,7 @@ void inicia_elmeu_taulell(char*** t,int dim)
         scanf("%d%d",&x,&y);
         x--;
         y--;
-        if(x<dim && y<dim && x>=0 && y>=0 && !cercapos(x,y,t)){
+        if(x<dim && y<dim && x>=0 && y>=0 && !cercapos(x,y,t,dim)){
             t[1][x][y] = CASELLA_VAIXELL;
             printf("Barco colocado\n");
         }else
@@ -141,17 +141,21 @@ void inicia_elmeu_taulell(char*** t,int dim)
         imp_tab(t[1],dim);
     }
 }
-int cercapos(int x , int y , char*** t,int dim){//saber si al rededor de una posicion hay un barco     ERROR NO FUNCIONA BIEN
+int cercapos(int x , int y , char*** t,int dim){//saber si al rededor de una posicion hay un barco
     bool b = false;
     if(x>0)
         b = b || (t[1][x-1][y] == CASELLA_VAIXELL);
+    
     if(x < dim-1)
         b = b || (t[1][x+1][y] == CASELLA_VAIXELL);
+    
     if(y>0)
         b = b || (t[1][x][y-1] == CASELLA_VAIXELL);
+    
     if(y < dim-1)
         b = b || (t[1][x][y+1] == CASELLA_VAIXELL);
     
+    //printf("%d %d %d %d %d",y,dim,b,x,b || (t[1][x][y+1] == CASELLA_VAIXELL));
     return (t[1][x][y] == CASELLA_VAIXELL)||b;
 }
 void inicia_taulell_fix(char*** t,int dim)//inicializa los dos tableros de un jugador a . y ?
@@ -234,13 +238,18 @@ int main(int argc, char** argv) {
                         break;
                     case 1:
                     {
+                        //printf("LEN: %d\n",len);
                         inicia_elmeu_taulell(p1,len);
-                        imp_tab(p1[1],len);
+                        inicia_taulell_fix(p2,dim);
                         break;
                     }
                     case 2:
                         break;
-
+                    default:
+                    {
+                        printf("Opcion no valida\n");
+                        break;
+                    }
                 }
             }
                 break;
@@ -250,8 +259,14 @@ int main(int argc, char** argv) {
                 break;
             case 4:
                 break;
+            default:
+                {
+                    printf("Opcion no valida\n");
+                    break;
+                }
         }
-
+        free(p1);
+        free(p2);
     }
     return (EXIT_SUCCESS);
 }
