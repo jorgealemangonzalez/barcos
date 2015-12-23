@@ -34,7 +34,13 @@ enum casella
     CASELLA_VAIXELL_TOCAT = 'X',
     CASELLA_AIGUA_TOCADA = '-'
 };
-
+enum posicion
+{
+    ARRIBA = 1,
+    DERECHA = 2,
+    ABAJO = 3,
+    IZQUIERDA = 4
+};
 enum tret
 {
     ERROR = -1,
@@ -93,6 +99,6 @@ extern void inicia_taulell_fix(char*** t,int dim);
         taulell_vaixells: (per refer�ncia) taula de dues dimensions
             DIM_MAX x DIM_MAX.
     =========================================================================*/
-extern int dispara (char fila, int col, char t[][DIM_MAX]);
-
+//extern int dispara (char fila, int col, char t[][DIM_MAX]);
+extern int dispara (char fila, int col, char*** t, int dim); 
 #endif /* VAIXELLS_H_INCLUDED */
