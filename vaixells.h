@@ -100,5 +100,5 @@ extern void inicia_taulell_fix(char*** t,int dim);
             DIM_MAX x DIM_MAX.
     =========================================================================*/
 //extern int dispara (char fila, int col, char t[][DIM_MAX]);
-extern int dispara (char fila, int col, char*** t, int dim); 
+extern int dispara(char fila, int col, char*** t, int dim);
 #endif /* VAIXELLS_H_INCLUDED */

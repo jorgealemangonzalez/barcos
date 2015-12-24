@@ -52,15 +52,15 @@ void inicia_elmeu_taulell(char*** t,int dim)//t 3 dimensiones: 1ª 0-tablero dis
         scanf("%d%d",&x,&y);
         x--;
         y--;
-        if(x<dim && y<dim && x>=0 && y>=0 && t[1][x][y] != CASELLA_VAIXELL && !cercapos(x,y,t,dim)){
-            t[1][x][y] = CASELLA_VAIXELL;
+        if(x<dim && y<dim && x>=0 && y>=0 && t[0][x][y] != CASELLA_VAIXELL && !cercapos(x,y,t,dim)){
+            t[0][x][y] = CASELLA_VAIXELL;
             printf("Barco colocado\n");
         }else
         {
             printf("No se puede colocar el barco en esa posición\n");
             i--;
         }
-        imp_tab(t[1],dim);
+        imp_tab(t[0],dim);
     }
     for(i = 0 ; i < 3;++i)
     {
@@ -70,21 +70,21 @@ void inicia_elmeu_taulell(char*** t,int dim)//t 3 dimensiones: 1ª 0-tablero dis
         y--;
         printf("Introduzca la dirección (h/v)\n");
         scanf("\n%c",&dir);
-        if(dir == 'h' && x < dim && y+1 < dim && t[1][x][y] != CASELLA_VAIXELL && x >= 0 && y>= 0 && !cercapos(x,y,t,dim) && !cercapos(x,y+1,t,dim))
+        if(dir == 'h' && x < dim && y+1 < dim && t[0][x][y] != CASELLA_VAIXELL && x >= 0 && y>= 0 && !cercapos(x,y,t,dim) && !cercapos(x,y+1,t,dim))
         {
-            t[1][x][y] = CASELLA_VAIXELL;
-            t[1][x][y+1] = CASELLA_VAIXELL;
+            t[0][x][y] = CASELLA_VAIXELL;
+            t[0][x][y+1] = CASELLA_VAIXELL;
         }else 
-        if(dir == 'v' && x+1 < dim && y < dim && t[1][x][y] != CASELLA_VAIXELL && x >= 0 && y>= 0 && !cercapos(x,y,t,dim) && !cercapos(x+1,y,t,dim))
+        if(dir == 'v' && x+1 < dim && y < dim && t[0][x][y] != CASELLA_VAIXELL && x >= 0 && y>= 0 && !cercapos(x,y,t,dim) && !cercapos(x+1,y,t,dim))
         {
-            t[1][x+1][y] = CASELLA_VAIXELL;
-            t[1][x][y] = CASELLA_VAIXELL;
+            t[0][x+1][y] = CASELLA_VAIXELL;
+            t[0][x][y] = CASELLA_VAIXELL;
         }else
         {
             printf("La configuracion no es valida o el barco esta demasiado cerca de otro\n");
             --i;
         }
-        imp_tab(t[1],dim);
+        imp_tab(t[0],dim);
     }
     for(i = 0 ; i < 2;++i)
     {
@@ -94,23 +94,23 @@ void inicia_elmeu_taulell(char*** t,int dim)//t 3 dimensiones: 1ª 0-tablero dis
         y--;
         printf("Introduzca la dirección (h/v)\n");
         scanf("\n%c",&dir);
-        if(dir == 'h' && x < dim && y+2 < dim && t[1][x][y] != CASELLA_VAIXELL && x >= 0 && y>= 0 && !cercapos(x,y,t,dim) && !cercapos(x,y+1,t,dim) && !cercapos(x,y+2,t,dim))
+        if(dir == 'h' && x < dim && y+2 < dim && t[0][x][y] != CASELLA_VAIXELL && x >= 0 && y>= 0 && !cercapos(x,y,t,dim) && !cercapos(x,y+1,t,dim) && !cercapos(x,y+2,t,dim))
         {
-            t[1][x][y] = CASELLA_VAIXELL;
-            t[1][x][y+1] = CASELLA_VAIXELL;
-            t[1][x][y+2] = CASELLA_VAIXELL;
+            t[0][x][y] = CASELLA_VAIXELL;
+            t[0][x][y+1] = CASELLA_VAIXELL;
+            t[0][x][y+2] = CASELLA_VAIXELL;
         }else 
-        if(dir == 'v' && x+2 < dim && y < dim && t[1][x][y] != CASELLA_VAIXELL && x >= 0 && y>= 0 && !cercapos(x,y,t,dim) && !cercapos(x+1,y,t,dim) && !cercapos(x+2,y,t,dim))
+        if(dir == 'v' && x+2 < dim && y < dim && t[0][x][y] != CASELLA_VAIXELL && x >= 0 && y>= 0 && !cercapos(x,y,t,dim) && !cercapos(x+1,y,t,dim) && !cercapos(x+2,y,t,dim))
         {
-            t[1][x+1][y] = CASELLA_VAIXELL;
-            t[1][x+2][y] = CASELLA_VAIXELL;
-            t[1][x][y] = CASELLA_VAIXELL;
+            t[0][x+1][y] = CASELLA_VAIXELL;
+            t[0][x+2][y] = CASELLA_VAIXELL;
+            t[0][x][y] = CASELLA_VAIXELL;
         }else
         {
             printf("La configuracion no es valida o el barco esta demasiado cerca de otro\n");
             --i;
         }
-        imp_tab(t[1],dim);
+        imp_tab(t[0],dim);
     }
     for(i = 0 ; i < 1;++i)
     {
@@ -120,39 +120,39 @@ void inicia_elmeu_taulell(char*** t,int dim)//t 3 dimensiones: 1ª 0-tablero dis
         y--;
         printf("Introduzca la dirección (h/v)\n");
         scanf("\n%c",&dir);
-        if(dir == 'h' && x < dim && y+3 < dim && x >= 0 && y>= 0 && t[1][x][y] != CASELLA_VAIXELL && !cercapos(x,y,t,dim) && !cercapos(x,y+1,t,dim) && !cercapos(x,y+2,t,dim) && !cercapos(x,y+3,t,dim))
+        if(dir == 'h' && x < dim && y+3 < dim && x >= 0 && y>= 0 && t[0][x][y] != CASELLA_VAIXELL && !cercapos(x,y,t,dim) && !cercapos(x,y+1,t,dim) && !cercapos(x,y+2,t,dim) && !cercapos(x,y+3,t,dim))
         {
-            t[1][x][y] = CASELLA_VAIXELL;
-            t[1][x][y+1] = CASELLA_VAIXELL;
-            t[1][x][y+2] = CASELLA_VAIXELL;
-            t[1][x][y+3] = CASELLA_VAIXELL;
+            t[0][x][y] = CASELLA_VAIXELL;
+            t[0][x][y+1] = CASELLA_VAIXELL;
+            t[0][x][y+2] = CASELLA_VAIXELL;
+            t[0][x][y+3] = CASELLA_VAIXELL;
         }else 
-        if(dir == 'v' && x+3 < dim && y < dim && x >= 0 && y>= 0 && t[1][x][y] != CASELLA_VAIXELL && !cercapos(x,y,t,dim) && !cercapos(x+1,y,t,dim) && !cercapos(x+2,y,t,dim) && !cercapos(x+3,y,t,dim))
+        if(dir == 'v' && x+3 < dim && y < dim && x >= 0 && y>= 0 && t[0][x][y] != CASELLA_VAIXELL && !cercapos(x,y,t,dim) && !cercapos(x+1,y,t,dim) && !cercapos(x+2,y,t,dim) && !cercapos(x+3,y,t,dim))
         {
-            t[1][x+1][y] = CASELLA_VAIXELL;
-            t[1][x+3][y] = CASELLA_VAIXELL;
-            t[1][x+2][y] = CASELLA_VAIXELL;
-            t[1][x][y] = CASELLA_VAIXELL;
+            t[0][x+1][y] = CASELLA_VAIXELL;
+            t[0][x+3][y] = CASELLA_VAIXELL;
+            t[0][x+2][y] = CASELLA_VAIXELL;
+            t[0][x][y] = CASELLA_VAIXELL;
         }else
         {
             printf("La configuracion no es valida o el barco esta demasiado cerca de otro\n");
             --i;
         }
-        imp_tab(t[1],dim);
+        imp_tab(t[0],dim);
     }
 }
 int cercapos(int x , int y , char*** t,int dim){//saber si al rededor de una posicion hay un barco y donde esta 
     int pos = 0;
-    if(x>0 && ( t[1][x-1][y] == CASELLA_VAIXELL_TOCAT || t[1][x-1][y] == CASELLA_VAIXELL) )
+    if(x>0 && (t[0][x-1][y] == CASELLA_VAIXELL) )
         pos = ARRIBA;
-    if(x < dim-1 && (t[1][x+1][y] == CASELLA_VAIXELL_TOCAT || t[1][x+1][y] == CASELLA_VAIXELL))
+    if(x < dim-1 && (t[0][x+1][y] == CASELLA_VAIXELL))
         pos = ABAJO;
-    if(y>0 && (t[1][x][y-1] == CASELLA_VAIXELL_TOCAT || t[1][x][y-1] == CASELLA_VAIXELL))
+    if(y>0 && (t[0][x][y-1] == CASELLA_VAIXELL))
         pos = IZQUIERDA;
-    if(y < dim-1 && (t[1][x][y+1] == CASELLA_VAIXELL_TOCAT || t[1][x][y+1] == CASELLA_VAIXELL))
+    if(y < dim-1 && (t[0][x][y+1] == CASELLA_VAIXELL))
         pos = DERECHA;
     
-    //printf("%d %d %d %d %d",y,dim,b,x,b || (t[1][x][y+1] == CASELLA_VAIXELL));
+    //printf("%d %d %d %d %d",y,dim,b,x,b || (t[0][x][y+1] == CASELLA_VAIXELL));
     return pos;
 }
 void inicia_taulell_fix(char*** t,int dim)//inicializa los dos tableros de un jugador a . y ?
@@ -161,63 +161,61 @@ void inicia_taulell_fix(char*** t,int dim)//inicializa los dos tableros de un ju
     for(i = 0 ; i < dim ; ++i){
         for(j = 0 ; j < dim ; ++j)
         {
-            t[0][i][j] = CASELLA_BUIDA;
-            t[1][i][j] = CASELLA_AIGUA;
+            t[0][i][j] = CASELLA_AIGUA;
+            t[1][i][j] = CASELLA_BUIDA;
         }
     }
     //SUBMARINOS
-    t[1][0][0] = CASELLA_VAIXELL;
-    t[1][2][2] = CASELLA_VAIXELL;
-    t[1][4][4] = CASELLA_VAIXELL;
-    t[1][8][8] = CASELLA_VAIXELL;
+    t[0][0][0] = CASELLA_VAIXELL;
+    t[0][2][2] = CASELLA_VAIXELL;
+    t[0][4][4] = CASELLA_VAIXELL;
+    t[0][8][8] = CASELLA_VAIXELL;
     //Dragamines
-    t[1][0][3] = CASELLA_VAIXELL;
-    t[1][0][4] = CASELLA_VAIXELL;
-    t[1][5][0] = CASELLA_VAIXELL;
-    t[1][6][0] = CASELLA_VAIXELL;
-    t[1][7][5] = CASELLA_VAIXELL;
-    t[1][7][6] = CASELLA_VAIXELL;
+    t[0][0][3] = CASELLA_VAIXELL;
+    t[0][0][4] = CASELLA_VAIXELL;
+    t[0][5][0] = CASELLA_VAIXELL;
+    t[0][6][0] = CASELLA_VAIXELL;
+    t[0][7][5] = CASELLA_VAIXELL;
+    t[0][7][6] = CASELLA_VAIXELL;
     //Destructor
-    t[1][2][4] = CASELLA_VAIXELL;
-    t[1][2][5] = CASELLA_VAIXELL;
-    t[1][2][6] = CASELLA_VAIXELL;
-    t[1][1][dim-1] = CASELLA_VAIXELL;
-    t[1][2][dim-1] = CASELLA_VAIXELL;
-    t[1][3][dim-1] = CASELLA_VAIXELL;
+    t[0][2][4] = CASELLA_VAIXELL;
+    t[0][2][5] = CASELLA_VAIXELL;
+    t[0][2][6] = CASELLA_VAIXELL;
+    t[0][1][dim-1] = CASELLA_VAIXELL;
+    t[0][2][dim-1] = CASELLA_VAIXELL;
+    t[0][3][dim-1] = CASELLA_VAIXELL;
     //Portaavions
-    t[1][dim-1][0] = CASELLA_VAIXELL;
-    t[1][dim-1][1] = CASELLA_VAIXELL;
-    t[1][dim-1][2] = CASELLA_VAIXELL;
-    t[1][dim-1][3] = CASELLA_VAIXELL;
+    t[0][dim-1][0] = CASELLA_VAIXELL;
+    t[0][dim-1][1] = CASELLA_VAIXELL;
+    t[0][dim-1][2] = CASELLA_VAIXELL;
+    t[0][dim-1][3] = CASELLA_VAIXELL;
     
-    imp_tab(t[1],dim);
+    imp_tab(t[0],dim);
 }
 int dispara(char fila, int col, char*** t, int dim)
 {
     int f = (int)(fila)-(int)('A');
-    if(t[1][f][col] == CASELLA_VAIXELL_TOCAT || t[1][f][col] ==  CASELLA_AIGUA_TOCADA)
+    if(t[0][f][col] == CASELLA_VAIXELL_TOCAT || t[0][f][col] ==  CASELLA_AIGUA_TOCADA) //Para esto le tenemos que pasar el tablero tambien del que esta tirando , ahora mismo esta mal
         return REPETIT;
-    else if(t[1][f][col] == CASELLA_AIGUA){
-        t[1][f][col] = CASELLA_AIGUA_TOCADA;
+    else if(t[0][f][col] == CASELLA_AIGUA){
         return AIGUA;
     }else
-        if(t[1][f][col] == CASELLA_VAIXELL)
+        if(t[0][f][col] == CASELLA_VAIXELL)
         {
-            t[1][f][col] = CASELLA_VAIXELL_TOCAT;
             int ptr;
             int cerca = cercapos(f,col,t,dim);
             if(cerca == IZQUIERDA || cerca == DERECHA)
             {
                 bool alive = false;  // Era el ultimo trozo por matar del barco ?
 
-                for(ptr  = col-1;ptr >= 0 && !(t[1][f][ptr]==CASELLA_AIGUA) && !alive;--ptr)
+                for(ptr  = col-1;ptr >= 0 && !(t[0][f][ptr]==CASELLA_AIGUA) && !alive;--ptr)
                 {
-                    if(t[1][f][ptr] == CASELLA_VAIXELL)
+                    if(t[0][f][ptr] == CASELLA_VAIXELL && t[0][f][ptr] != CASELLA_VAIXELL_TOCAT)
                         alive = true;
                 }
-                for(ptr = col+1; ptr < dim && !(t[1][f][ptr] == CASELLA_AIGUA) && !alive; ++ptr)
+                for(ptr = col+1; ptr < dim && !(t[0][f][ptr] == CASELLA_AIGUA) && !alive; ++ptr)
                 {
-                    if(t[1][f][ptr] == CASELLA_VAIXELL)
+                    if(t[0][f][ptr] == CASELLA_VAIXELL && t[0][f][ptr] != CASELLA_VAIXELL_TOCAT)
                         alive = true;
                 }
                 if(alive){
@@ -229,14 +227,14 @@ int dispara(char fila, int col, char*** t, int dim)
             { // CASO ARRIBA Y ABAJO Y TAMBIEN CUANDO EL BARCO ES DE SOLO UNA CASILLA
                 bool alive = false;  // El barco seguira vivo ?
                 
-                for(ptr  = f - 1;ptr >= 0 && !(t[1][ptr][col]==CASELLA_AIGUA) && !alive;--ptr)
+                for(ptr  = f - 1;ptr >= 0 && !(t[0][ptr][col]==CASELLA_AIGUA) && !alive;--ptr)
                 {
-                    if(t[1][ptr][col] == CASELLA_VAIXELL)
+                    if(t[0][ptr][col] == CASELLA_VAIXELL && t[0][ptr][col] != CASELLA_VAIXELL_TOCAT)
                         alive = true;
                 }
-                for(ptr = f+1; ptr < dim && !(t[1][ptr][col] == CASELLA_AIGUA) && !alive; ++ptr)
+                for(ptr = f+1; ptr < dim && !(t[0][ptr][col] == CASELLA_AIGUA) && !alive; ++ptr)
                 {
-                    if(t[1][ptr][col] == CASELLA_VAIXELL)
+                    if(t[0][ptr][col] == CASELLA_VAIXELL && t[0][ptr][col] != CASELLA_VAIXELL_TOCAT)
                         alive = true;
                 }
                 if(alive){
@@ -305,12 +303,13 @@ int main(int argc, char** argv) {
                         int L1 = 0, L2 = 0;//lanzamientos del jugador 1 y del jugador 2
                         char f;//fila
                         int c ; //columna
+                        int intellif=-1,intellic=-1,dir=-1; // Memoria para tiradas de la maquina dir vendra dado por los enumerandos de posicion según donde fue la posocion anterior tocada
                         while(BA1 && BA2)//Mientras haya barcos activos de los dos
                         {
                             //A JUGAR
                             if(turn == 1){
-                                printf("Es tu turno !!\n\n");
-                                imp_tab(p1[0],dim);
+                                printf("-----------------¡¡ Es tu turno !!-----------------\n\n");
+                                imp_tab(p1[1],dim);
                                 f = 0;
                                 while(!(f>='A' &&  f < 'A'+dim))
                                 {
@@ -347,17 +346,21 @@ int main(int argc, char** argv) {
                                     }
                                     case TOCAT:{
                                         printf("Barco tocado, puedes volver a tirar \n");
-                                        p1[0][f-'A'][c] = CASELLA_VAIXELL_TOCAT;
+                                        p1[1][f-'A'][c] = CASELLA_VAIXELL;
+                                        p2[0][f-'A'][c] = CASELLA_VAIXELL_TOCAT;
                                         break;
                                     }
                                     case ENFONSAT:{
                                         printf("BARCO HUNDIDO !!! , puedes volver a tirar\n");
-                                        p1[0][f-'A'][c] = CASELLA_VAIXELL_TOCAT;
+                                        p1[1][f-'A'][c] = CASELLA_VAIXELL;
+                                        p2[0][f-'A'][c] = CASELLA_VAIXELL_TOCAT;
+                                        BA2--;
                                         break;
                                     }
                                     case AIGUA:{
                                         printf("Agua ! \n");
-                                        p1[0][f-'A'][c] = CASELLA_AIGUA_TOCADA;
+                                        p1[1][f-'A'][c] = CASELLA_AIGUA;
+                                        p2[0][f-'A'][c] = CASELLA_AIGUA_TOCADA;
                                         turn = 2;
                                         break;
                                     }
@@ -369,16 +372,113 @@ int main(int argc, char** argv) {
                                 //Si acierta tira una bomba a una contigua que no haya sido disparada ya
                                 int ran; // numero aleatorio usado para las tiradas NO "Inteligentes"
                                          // Usaremos la función rand()para generar un nº aleatorio y el módulo para acotarlo en nuestro rango
-                                printf("Turno de la maquina !!\n\n");
+                                printf("-----------------¡¡ Turno de la maquina !!-----------------\n\n");
                                 
-                                imp_tab(p2[0],dim);
                                 //ESTO SI NO HAY GUARDADA NINGUNA INFORMACION DE LA TIRADA ANTERIOR
-                                /*                                                                                                                  VOY POR AQUI*****************************************
-                                int f= rand()%dim , c=rand()%dim ;
-                                while(p2[0][f][c] != CASELLA_BUIDA) //Mientras no encuentre una casilla donde todavia no haya tirado 
-                                    f= rand()%dim , c=rand()%dim ;
-                                */
+                                int f=intellif , c=intellic ;//Tirada inteligente segun tirada anterior
                                 
+                                if(f == -1)
+                                    f= rand()%dim , c=rand()%dim ;
+                                
+                                while(p2[1][f][c] != CASELLA_BUIDA) //Mientras no encuentre una casilla donde todavia no haya tirado 
+                                    f= rand()%dim , c=rand()%dim ;
+                                L1++;
+                                printf("%d",f);
+                                int result = dispara((char)(f)+'A',c,p1,dim);
+                                
+                                if(result == ERROR)
+                                    printf("Ha habido un error en el lanzamiento\n");
+                                else
+                                    points2 += result-1;
+                                switch(result){
+                                    case REPETIT:
+                                    {
+                                        printf("Bomba repetida , se te restara 1 punto\n");
+                                        intellif=-1,intellic=-1,dir=-1; 
+                                        turn = 2;
+                                        break;
+                                    }
+                                    case TOCAT:{
+                                        printf("Barco tocado, puedes volver a tirar \n");
+                                        p2[1][f][c] = CASELLA_VAIXELL;
+                                        p1[1][f][c] = CASELLA_VAIXELL_TOCAT;
+                                        //si acertamos tiraremos bombas inteligentemente cerca
+                                        if(dir == -1)//si todavia no sabemos la orientacion del barco
+                                        {
+                                            //predeterminadamente suponemos que el varco esta en vertical
+                                            intellic = c;
+                                            if(f > 0)
+                                            {
+                                                intellif = f-1;
+                                                dir=ABAJO;
+                                            }else {
+                                                intellif = f+1;
+                                                dir=ARRIBA;
+                                            }
+                                        }else
+                                        {
+                                            switch(dir){
+                                                case ARRIBA:{
+                                                    
+                                                    if(f<dim){
+                                                        intellif = f+1;
+                                                    }else{
+                                                        int i;
+                                                        for(i=f-1;i>0&&p2[1][i][c]==CASELLA_VAIXELL;--i);
+                                                        intellif = i;
+                                                    }
+                                                }
+                                                case ABAJO:{
+                                                    if(f>0){
+                                                        intellif = f-1;
+                                                    }else{
+                                                        int i;
+                                                        for(i=f+1;i<dim-1&&p2[1][i][c]==CASELLA_VAIXELL;++i);
+                                                        intellif = i;
+                                                    }
+                                                }
+                                                case DERECHA:{
+                                                    if(c>0){
+                                                        intellic = c-1;
+                                                    }else{
+                                                        int i;
+                                                        for(i=c+1;i<dim-1&&p2[1][f][i]==CASELLA_VAIXELL;++i);
+                                                        intellic = i;
+                                                    }
+                                                }
+                                                case IZQUIERDA:{
+                                                    if(c<dim){
+                                                        intellic = c+1;
+                                                    }else{
+                                                        int i;
+                                                        for(i=c-1;i>0&&p2[1][f][i]==CASELLA_VAIXELL;--i);
+                                                        intellic = i;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case ENFONSAT:{
+                                        printf("BARCO HUNDIDO !!! , puedes volver a tirar\n");
+                                        p2[1][f][c] = CASELLA_VAIXELL;
+                                        p1[0][f][c] = CASELLA_VAIXELL_TOCAT;
+                                        intellif=-1,intellic=-1,dir=-1; 
+                                        BA1--;
+                                        break;
+                                    }
+                                    case AIGUA:{
+                                        printf("Agua ! \n");
+                                        p2[1][f][c] = CASELLA_AIGUA;
+                                        p1[1][f][c] = CASELLA_AIGUA_TOCADA;
+                                        //DESAROOLLAR INTELIGENCIA DEL FALLO , DONE TIRAR AHORA VOY POR AQUI------------------------------------------------------------------------------------
+                                        turn = 1;
+                                        break;
+                                    }
+                                
+                                }
+                                
+                                imp_tab(p2[1],dim);
                             }
                         }
                         
