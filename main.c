@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include "vaixells.h"
 
 // X FILA Y COLUMNA peta cuando metemos un 8
@@ -192,7 +193,7 @@ void inicia_taulell_fix(char*** t,int dim)//inicializa los dos tableros de un ju
     
     imp_tab(t[0],dim);
 }
-int dispara(char fila, int col, char*** t, int dim)
+int dispara(char fila, int col, char*** t, int dim)  // EN ALGUN MOMENTO NO PILLA BIEN EL BARCO HUNDIDO----------------------------------------------------------------------------------
 {
     int f = (int)(fila)-(int)('A');
     if(t[0][f][col] == CASELLA_VAIXELL_TOCAT || t[0][f][col] ==  CASELLA_AIGUA_TOCADA) //Para esto le tenemos que pasar el tablero tambien del que esta tirando , ahora mismo esta mal
@@ -208,12 +209,12 @@ int dispara(char fila, int col, char*** t, int dim)
             {
                 bool alive = false;  // Era el ultimo trozo por matar del barco ?
 
-                for(ptr  = col-1;ptr >= 0 && !(t[0][f][ptr]==CASELLA_AIGUA || t[0][ptr][col]==CASELLA_AIGUA_TOCADA) && !alive;--ptr)
+                for(ptr  = col-1;ptr >= 0 && !(t[0][f][ptr]==CASELLA_AIGUA || t[0][f][ptr]==CASELLA_AIGUA_TOCADA) && !alive;--ptr)
                 {
                     if(t[0][f][ptr] == CASELLA_VAIXELL )
                         alive = true;
                 }
-                for(ptr = col+1; ptr < dim && !(t[0][f][ptr] == CASELLA_AIGUA || t[0][ptr][col]==CASELLA_AIGUA_TOCADA) && !alive; ++ptr)
+                for(ptr = col+1; ptr < dim && !(t[0][f][ptr] == CASELLA_AIGUA || t[0][f][ptr]==CASELLA_AIGUA_TOCADA) && !alive; ++ptr)
                 {
                     if(t[0][f][ptr] == CASELLA_VAIXELL )
                         alive = true;
@@ -314,7 +315,7 @@ void play_machine(char***p1,char***p2,int dim,int *L2,int *points2,int *turn,int
     if(f == -1)
         f= rand()%dim , c=rand()%dim ;
     if(p2[1][f][c] != CASELLA_BUIDA)(*dir) = -1;
-    while(p2[1][f][c] != CASELLA_BUIDA )//Mientras no encuentre una casilla donde todavia no haya tirado 
+    while(p2[1][f][c] != CASELLA_BUIDA || (cercapos(f,c,p2[1],dim)&& *dir == -1))//Mientras no encuentre una casilla donde todavia no haya tirado 
     {
         f= rand()%dim , c=rand()%dim ;
     }
@@ -352,9 +353,11 @@ void play_machine(char***p1,char***p2,int dim,int *L2,int *points2,int *turn,int
                     (*intellif) = f+1;
                     (*dir)=ARRIBA;
                 }else if(c > 0 && p2[1][f][c-1] == CASELLA_BUIDA){
+                    (*dir)=DERECHA;
                     (*intellif) = f;
                     (*intellic) = c-1;
                 }else{
+                    (*dir)=IZQUIERDA;
                     (*intellif) = f;
                     (*intellic) = c+1;
                 }
@@ -444,7 +447,7 @@ void play_machine(char***p1,char***p2,int dim,int *L2,int *points2,int *turn,int
             switch ((*dir)){
                 case ARRIBA:{//si falla con esta direccio significa que el barco esta en horizontal, ya que hemos intentado ir por arriba y por abajo
                     (*intellif) = f-1;
-                    if(c > 0 && p2[1][f][c-1] == CASELLA_BUIDA)//Teniendo cuidado de que no este en una esquina el barco
+                    if(c > 0 && p2[1][f-1][c-1] == CASELLA_BUIDA)//Teniendo cuidado de que no este en una esquina el barco
                     {
                         (*intellic) = c-1;
                         (*dir) = DERECHA;
@@ -503,7 +506,7 @@ void play_machine(char***p1,char***p2,int dim,int *L2,int *points2,int *turn,int
 }
 int main(int argc, char** argv) {
     srand(time(NULL)); // Para los numeros aleatorios
-    int opc=0,dim = 0,players=-1; // dim longitud lateral de la tabla
+    int opc=0; 
     char ***p1,***p2;//Tableros para player 1 y 2
                      //primer indice tablero tuyo = 0 , tablero de bombas lanzadas = 1
                      //las otras dos dimensiones son el tablero
@@ -519,6 +522,7 @@ int main(int argc, char** argv) {
         {
             case 1:
             {
+                int dim = 0,players=-1;//dim lateral de la tabla
                 while(dim < 8 || dim > 10){
                     printf("Introduzca la medida de la longitud de uno de los lados del tablero:\n");
                     scanf("%d",&dim);
@@ -593,6 +597,7 @@ int main(int argc, char** argv) {
                                 //Si acierta tira una bomba a una contigua que no haya sido disparada ya
                                 //Si falla intenta arriba , luego abajo , luego , izquierda y luego derecha 
                                          // Usaremos la función rand()para generar un nº aleatorio y el módulo para acotarlo en nuestro rango
+                                printf("Antes: intellif: %d , intellic: %d , dir: %d\n",intellif2,intellic2,dir2);
                                 play_machine(p1,p2,dim,&L2,&points2,&turn,&BA1,&intellif2,&intellic2,&dir2);
                             }
                         }
@@ -629,12 +634,91 @@ int main(int argc, char** argv) {
                         break;
                     }
                 }
+                //GUARDAR RESULTADOS SI A ALGUNO DE LOS JUGADORES NO LE QUEDAN BARCOS Y ENTRARIAN EN LOS 25 PRIMEROS
+                if( !(BA1 && BA2)){
+                    printf("Premios-\n");
+                    int p;//puntos del jugador ganador
+                    char pnom[50];
+                    if(BA1){//Ha ganado el jugador 1
+                        p = (int)(100*(double)((double)(dim)/(double)(L1)))*points1;
+                    }else{
+                        p = (int)(100*(double)((double)(dim)/(double)(L2)))*points2;
+                    }
+                    
+                    struct record record[25];
+                    
+                    FILE *r = fopen("fitxer_records.txt","r");
+                    int i=0;
+                    while(!feof(r)){
+                        fscanf(r,"%s %d\n",record[i].nombre,&record[i].points);
+                        if(record[i].nombre[0] != '\0')
+                            ++i;
+                    }
+                    int j;
+                    printf("Tu puntuación ha sido : %d\n",p);
+                    printf("-----Podium-----\n");
+                    
+                    for(j = 0; j <= i;++j){ //Iteramos los elementos para encontrar la posicion donde vamos a insertar la nueva puntuacion
+                        if(j == 25)break;
+                        if(j < 10 && j < i && i != 0){//Imprimimos los 10 primeros 
+                            printf("Nombre: %50s Puntucion:%10d \n",record[j].nombre,record[j].points);
+                        }
+                        if(record[j].points < p||j == i){
+                            //Insertamos el elemento
+                            int paux;
+                            char nomaux[50];
+                            
+                            
+                            printf("Has entado en los 25 mejores!!!\nPon tu nombre: ");
+                            scanf("%s",pnom);
+                            int k;
+                            for(k = j;k<=i+1 && k != 25;++k){//Movemos todos los demas
+                               
+                                paux = record[k].points;
+                                strcpy(nomaux,record[k].nombre);
+                                record[k].points = p;
+                                strcpy(record[k].nombre,pnom);
+                                p = paux;
+                                strcpy(pnom,nomaux);
+                            }
+                            fclose(r);
+                            //Write back en el fichero
+                            FILE *w = fopen("fitxer_records.txt","w");
+                            for(k = 0; k <= i;++k){
+                                fprintf(w,"%s %d\r\n",record[k].nombre,record[k].points);
+                            }
+                            fclose(w);
+                            printf("Presiona cualquier tecla para volver al menu\n");
+                            // Hay que poner dos porque el primero coge el salto de linea anterior
+                            getchar();
+                            getchar();
+                            break;
+                        }
+                    }
+                }
+                free(p1);
+                free(p2);
+                break;
             }
                 break;
             case 2:
                 break;
-            case 3:
-                break;
+            case 3:{
+                printf("--------Las 25 mejores puntuaciones--------\n");
+                FILE *r = fopen("fitxer_records.txt","r");
+                char n[50];
+                int p;
+                while(!feof(r)){
+                    fscanf(r,"%s %d\n",n,&p);
+                    printf("Nombre: %50s Puntucion:%10d \n",n,p);
+                }
+                fclose(r);
+                printf("Presiona cualquier tecla para volver al menu\n");
+                // Hay que poner dos porque el primero coge el salto de linea anterior
+                getchar();
+                getchar();
+                break;   
+            }
             case 4:
                 break;
             default:

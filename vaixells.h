@@ -19,6 +19,12 @@
 
 #define DIM_MAX     10
 #define DIM_MIN     8
+#define MAX(a,b)    a>b?a:b
+#define MIN(a,b)    a<b?a:b
+struct record{
+    int points;
+    char nombre[50];
+};
 
 enum orientacio
 {
